@@ -13,7 +13,13 @@ export type Income = {
   amount: number;
 };
 
-export const mockExpenses: Expense[] = [
+// Function to apply a small random variance (up to +/- 10%)
+const randomizeAmount = (baseAmount: number): number => {
+  const variance = baseAmount * 0.1 * (Math.random() * 2 - 1); // Random number between -0.1 and +0.1 of baseAmount
+  return parseFloat((baseAmount + variance).toFixed(2));
+};
+
+const baseMockExpenses = [
   {
     id: "exp_001",
     date: "2024-10-25",
@@ -65,7 +71,12 @@ export const mockExpenses: Expense[] = [
   },
 ];
 
-export const mockIncomes: Income[] = [
+export const mockExpenses: Expense[] = baseMockExpenses.map(expense => ({
+  ...expense,
+  amount: randomizeAmount(expense.amount),
+}));
+
+const baseMockIncomes = [
   {
     id: "inc_001",
     date: "2024-10-01",
@@ -85,3 +96,8 @@ export const mockIncomes: Income[] = [
     amount: 1000.00,
   },
 ];
+
+export const mockIncomes: Income[] = baseMockIncomes.map(income => ({
+  ...income,
+  amount: randomizeAmount(income.amount),
+}));

@@ -16,7 +16,6 @@ export type Income = {
 export type UserProfile = {
   name: string;
   email: string;
-  dateOfBirth?: Date; // Added Date of Birth
 };
 
 export type BudgetSettings = {
@@ -117,7 +116,6 @@ let incomesStore: Income[] = baseMockIncomes.map(income => ({
 let userProfileStore: UserProfile = {
   name: "Jane Doe",
   email: "jane.doe@example.com",
-  dateOfBirth: new Date("1990-01-01"), // Added default DOB
 };
 
 let budgetSettingsStore: BudgetSettings = {

@@ -19,9 +19,9 @@ const Dashboard = () => {
   const topCategory = Object.entries(largestCategory).sort(([, a], [, b]) => b - a)[0];
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: "USD",
+      currency: "INR",
     }).format(amount);
   };
 

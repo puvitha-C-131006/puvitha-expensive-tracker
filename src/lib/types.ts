@@ -71,11 +71,6 @@ const baseMockExpenses = [
   },
 ];
 
-export const mockExpenses: Expense[] = baseMockExpenses.map(expense => ({
-  ...expense,
-  amount: randomizeAmount(expense.amount),
-}));
-
 const baseMockIncomes = [
   {
     id: "inc_001",
@@ -97,7 +92,36 @@ const baseMockIncomes = [
   },
 ];
 
-export const mockIncomes: Income[] = baseMockIncomes.map(income => ({
+// Mutable in-memory stores
+let expensesStore: Expense[] = baseMockExpenses.map(expense => ({
+  ...expense,
+  amount: randomizeAmount(expense.amount),
+}));
+
+let incomesStore: Income[] = baseMockIncomes.map(income => ({
   ...income,
   amount: randomizeAmount(income.amount),
 }));
+
+// Functions to access and mutate the store
+export const getExpenses = () => expensesStore;
+export const addExpense = (expense: Omit<Expense, 'id'>) => {
+  const newExpense: Expense = {
+    ...expense,
+    id: `exp_${Date.now()}`,
+    date: new Date(expense.date).toISOString().split('T')[0],
+  };
+  expensesStore = [newExpense, ...expensesStore];
+  return newExpense;
+};
+
+export const getIncomes = () => incomesStore;
+export const addIncome = (income: Omit<Income, 'id'>) => {
+  const newIncome: Income = {
+    ...income,
+    id: `inc_${Date.now()}`,
+    date: new Date(income.date).toISOString().split('T')[0],
+  };
+  incomesStore = [newIncome, ...incomesStore];
+  return newIncome;
+};

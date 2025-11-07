@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseTable } from "@/components/ExpenseTable";
-import { mockExpenses, mockIncomes, Expense, Income } from "@/lib/types";
+import { getExpenses, getIncomes, Expense, Income } from "@/lib/types";
 import { CategoryBarChart } from "@/components/CategoryBarChart";
 import { IncomeBarChart } from "@/components/IncomeBarChart";
 import { DollarSign, TrendingUp, Wallet, CreditCard, ArrowDown, ArrowUp, Scale } from "lucide-react";
@@ -18,6 +18,10 @@ const Dashboard = () => {
   const [dataType, setDataType] = React.useState<"expenses" | "income">(
     "expenses",
   );
+
+  // Fetch current data from the store
+  const mockExpenses = getExpenses();
+  const mockIncomes = getIncomes();
 
   // Helper function to format currency
   const formatCurrency = (amount: number) => {

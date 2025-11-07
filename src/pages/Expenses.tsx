@@ -1,42 +1,27 @@
 import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseTable } from "@/components/ExpenseTable";
-import { mockExpenses, mockIncomes, Expense, Income } from "@/lib/types";
+import { getExpenses, getIncomes, addExpense, addIncome } from "@/lib/types";
 import { CategoryPieChart } from "@/components/CategoryPieChart";
 import { AddExpenseDialog } from "@/components/AddExpenseDialog";
 import { AddIncomeDialog } from "@/components/AddIncomeDialog";
 import React from "react";
 
 const Expenses = () => {
-  // Initialize state with mock data
-  const [expenses, setExpenses] = React.useState<Expense[]>(mockExpenses);
-  const [incomes, setIncomes] = React.useState<Income[]>(mockIncomes);
+  // Use a state variable to force re-render when data changes in the store
+  const [dataVersion, setDataVersion] = React.useState(0);
+
+  const expenses = getExpenses();
+  const incomes = getIncomes();
 
   const handleExpenseAdded = (newExpenseData: any) => {
-    // Create a new Expense object with a unique ID and correct structure
-    const newExpense: Expense = {
-      id: `exp_${Date.now()}`, // Simple unique ID generation
-      date: new Date(newExpenseData.date).toISOString().split('T')[0], // Format date to YYYY-MM-DD string
-      category: newExpenseData.category,
-      description: newExpenseData.description,
-      amount: newExpenseData.amount,
-    };
-    
-    // Add the new expense to the beginning of the list
-    setExpenses((prevExpenses) => [newExpense, ...prevExpenses]);
+    addExpense(newExpenseData);
+    setDataVersion(v => v + 1); // Force re-render
   };
 
   const handleIncomeAdded = (newIncomeData: any) => {
-    // Create a new Income object with a unique ID and correct structure
-    const newIncome: Income = {
-      id: `inc_${Date.now()}`, // Simple unique ID generation
-      date: new Date(newIncomeData.date).toISOString().split('T')[0], // Format date to YYYY-MM-DD string
-      source: newIncomeData.source,
-      amount: newIncomeData.amount,
-    };
-    
-    // Add the new income to the beginning of the list
-    setIncomes((prevIncomes) => [newIncome, ...prevIncomes]);
+    addIncome(newIncomeData);
+    setDataVersion(v => v + 1); // Force re-render
   };
 
   // For the table display, we will show expenses for now, but we could add a toggle later.

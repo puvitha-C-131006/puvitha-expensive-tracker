@@ -1,7 +1,6 @@
 import { Layout } from "@/components/Layout.tsx";
 import { UserProfileForm } from "@/components/UserProfileForm";
 import { BudgetSettingsForm } from "@/components/BudgetSettingsForm";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Settings = () => {
   return (
@@ -10,7 +9,6 @@ const Settings = () => {
       <div className="flex flex-col gap-8">
         <UserProfileForm />
         <BudgetSettingsForm />
-        <ThemeToggle />
       </div>
     </Layout>
   );

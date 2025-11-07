@@ -1,0 +1,76 @@
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { Expense } from "@/lib/types";
+
+interface CategoryBarChartProps {
+  expenses: Expense[];
+}
+
+const processData = (expenses: Expense[]) => {
+  const categoryTotals: Record<string, number> = {};
+  expenses.forEach((expense) => {
+    categoryTotals[expense.category] =
+      (categoryTotals[expense.category] || 0) + expense.amount;
+  });
+
+  return Object.entries(categoryTotals).map(([category, total]) => ({
+    category,
+    total,
+  }));
+};
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
+export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({
+  expenses,
+}) => {
+  const data = processData(expenses);
+
+  return (
+    <div className="h-[300px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+          <XAxis dataKey="category" stroke="hsl(var(--foreground))" />
+          <YAxis
+            tickFormatter={(value) => formatCurrency(value as number)}
+            stroke="hsl(var(--foreground))"
+          />
+          <Tooltip
+            formatter={(value) => [formatCurrency(value as number), "Amount"]}
+            labelFormatter={(label) => `Category: ${label}`}
+            contentStyle={{
+              backgroundColor: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border))",
+              borderRadius: "var(--radius)",
+            }}
+          />
+          <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};

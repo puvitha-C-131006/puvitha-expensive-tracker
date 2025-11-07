@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign, TrendingUp, Wallet, CreditCard } from "lucide-react";
 import { ExpenseTable } from "@/components/ExpenseTable";
 import { mockExpenses } from "@/lib/types";
+import { CategoryBarChart } from "@/components/CategoryBarChart";
 
 const Dashboard = () => {
   // Use a subset of mock expenses for recent transactions
@@ -88,6 +89,17 @@ const Dashboard = () => {
         </Card>
       </div>
       
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="col-span-2">
+          <CardHeader>
+            <CardTitle>Spending by Category</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CategoryBarChart expenses={mockExpenses} />
+          </CardContent>
+        </Card>
+      </div>
+
       <div className="mt-6">
         <Card>
           <CardHeader>

@@ -1,4 +1,4 @@
-import { Layout } from "@/components/Layout";
+import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign, TrendingUp, Wallet, CreditCard } from "lucide-react";
 import { ExpenseTable } from "@/components/ExpenseTable";

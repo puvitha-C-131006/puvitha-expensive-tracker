@@ -31,7 +31,9 @@ const Login = () => {
       <main className="flex-1 flex items-center justify-center p-4">
         <Card className="w-full max-w-md page-fade-in">
           <CardHeader className="text-center">
-            {/* Removed CardTitle: Welcome Back */}
+            <CardTitle className="text-3xl font-bold">
+              Welcome Back
+            </CardTitle>
             <CardDescription>
               Enter your credentials to access the Expense Tracker.
             </CardDescription>

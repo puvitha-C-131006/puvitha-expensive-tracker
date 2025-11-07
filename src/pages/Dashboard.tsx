@@ -1,17 +1,22 @@
 import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseTable } from "@/components/ExpenseTable";
-import { mockExpenses, mockIncomes, Expense } from "@/lib/types";
+import { mockExpenses, mockIncomes, Expense, Income } from "@/lib/types";
 import { CategoryBarChart } from "@/components/CategoryBarChart";
+import { IncomeBarChart } from "@/components/IncomeBarChart";
 import { DollarSign, TrendingUp, Wallet, CreditCard, ArrowDown, ArrowUp, Scale } from "lucide-react";
 import { isSameMonth, isSameYear, parseISO } from "date-fns";
 import React from "react";
 import { TimePeriodSelector } from "@/components/TimePeriodSelector";
+import { DataTypeSelector } from "@/components/DataTypeSelector";
 
 const Dashboard = () => {
   const today = new Date();
   const [timePeriod, setTimePeriod] = React.useState<"monthly" | "yearly">(
     "monthly",
+  );
+  const [dataType, setDataType] = React.useState<"expenses" | "income">(
+    "expenses",
   );
 
   // Helper function to format currency
@@ -33,20 +38,30 @@ const Dashboard = () => {
   const currentYearExpenses: Expense[] = mockExpenses.filter((exp) =>
     isSameYear(parseISO(exp.date), today)
   );
+  
+  // Filter incomes for the current month
+  const currentMonthIncomes: Income[] = mockIncomes.filter((inc) =>
+    isSameMonth(parseISO(inc.date), today) && isSameYear(parseISO(inc.date), today)
+  );
 
-  // Expenses displayed in the chart based on selected time period
+  // Filter incomes for the current year
+  const currentYearIncomes: Income[] = mockIncomes.filter((inc) =>
+    isSameYear(parseISO(inc.date), today)
+  );
+
+  // Data displayed in the chart based on selected time period and type
   const chartExpenses =
     timePeriod === "monthly" ? currentMonthExpenses : currentYearExpenses;
+  
+  const chartIncomes =
+    timePeriod === "monthly" ? currentMonthIncomes : currentYearIncomes;
+
 
   // --- Calculations ---
 
   const totalMonthlyExpenses = currentMonthExpenses.reduce((sum, exp) => sum + exp.amount, 0);
   const totalYearlyExpenses = currentYearExpenses.reduce((sum, exp) => sum + exp.amount, 0);
 
-  // Total Income (Current Month)
-  const currentMonthIncomes = mockIncomes.filter((inc) =>
-    isSameMonth(parseISO(inc.date), today) && isSameYear(parseISO(inc.date), today)
-  );
   const totalMonthlyIncome = currentMonthIncomes.reduce((sum, inc) => sum + inc.amount, 0);
 
   // Net Balance (Current Month)
@@ -171,14 +186,26 @@ const Dashboard = () => {
       <div className="grid gap-4 md:grid-cols-1">
         <Card className="col-span-1">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Spending by Category</CardTitle>
-            <TimePeriodSelector
-              selectedPeriod={timePeriod}
-              onPeriodChange={setTimePeriod}
-            />
+            <CardTitle>
+              {dataType === "expenses" ? "Spending by Category" : "Income by Source"}
+            </CardTitle>
+            <div className="flex space-x-2">
+              <DataTypeSelector
+                selectedType={dataType}
+                onTypeChange={setDataType}
+              />
+              <TimePeriodSelector
+                selectedPeriod={timePeriod}
+                onPeriodChange={setTimePeriod}
+              />
+            </div>
           </CardHeader>
           <CardContent>
-            <CategoryBarChart expenses={chartExpenses} />
+            {dataType === "expenses" ? (
+              <CategoryBarChart expenses={chartExpenses} />
+            ) : (
+              <IncomeBarChart incomes={chartIncomes} />
+            )}
           </CardContent>
         </Card>
       </div>

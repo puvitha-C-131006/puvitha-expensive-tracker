@@ -1,6 +1,5 @@
 import React from "react";
 import { Sidebar } from "./Sidebar";
-import { MadeWithDyad } from "./made-with-dyad";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className="flex-1 p-4 md:p-6 space-y-6">
           {children}
         </main>
-        <MadeWithDyad />
       </div>
     );
   }
@@ -50,7 +48,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className="flex-1 p-8 space-y-6">
           {children}
         </main>
-        <MadeWithDyad />
       </div>
     </div>
   );

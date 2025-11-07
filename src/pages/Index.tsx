@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/GradientButton";
 
 const Index = () => {
   return (
@@ -12,7 +12,7 @@ const Index = () => {
           Start managing your finances efficiently.
         </p>
         <Link to="/dashboard">
-          <Button size="lg">Go to Dashboard</Button>
+          <GradientButton>Go to Dashboard</GradientButton>
         </Link>
       </div>
     </div>

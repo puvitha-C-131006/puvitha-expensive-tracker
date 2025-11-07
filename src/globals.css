@@ -13,8 +13,12 @@
     --popover: 0 0% 100%;
     --popover-foreground: 25 80% 10%;
 
-    --primary: 217 91.2% 59.8%; /* Blue Accent Button */
+    --primary: 217 91.2% 59.8%; /* Blue Accent Button (Fallback) */
     --primary-foreground: 210 40% 98%; /* Light Text on Blue */
+    
+    /* Custom Gradient Colors for the new button */
+    --gradient-start: 217 91.2% 59.8%; /* Bright Blue */
+    --gradient-end: 224 80% 45%; /* Darker Blue */
 
     --secondary: 40 20% 90%;
     --secondary-foreground: 25 80% 10%;
@@ -32,7 +36,7 @@
     --input: 40 10% 80%;
     --ring: 217 91.2% 59.8%; /* Matching ring color to primary */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Softened radius */
 
     --sidebar-background: 40 20% 98%; /* Light Cream */
 
@@ -63,6 +67,10 @@
 
     --primary: 217 91.2% 59.8%; /* Blue Accent Button */
     --primary-foreground: 210 40% 98%; /* Light Text on Blue */
+    
+    /* Custom Gradient Colors for the new button */
+    --gradient-start: 217 91.2% 59.8%;
+    --gradient-end: 224 80% 45%;
 
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 210 40% 98%;

@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* Base Colors */
     --background: 40 20% 98%; /* Light Cream */
     --foreground: 25 80% 10%; /* Dark Brown Text */
 
@@ -13,20 +14,23 @@
     --popover: 0 0% 100%;
     --popover-foreground: 25 80% 10%;
 
-    --primary: 217 91.2% 59.8%; /* Blue Accent Button (Fallback) */
-    --primary-foreground: 210 40% 98%; /* Light Text on Blue */
+    /* Primary (Green) */
+    --primary: 142 71% 45%; 
+    --primary-foreground: 210 40% 98%; /* Light Text */
     
-    /* Custom Gradient Colors for the new button */
-    --gradient-start: 217 91.2% 59.8%; /* Bright Blue */
-    --gradient-end: 224 80% 45%; /* Darker Blue */
+    /* Custom Gradient Colors (Using Green/Gold) */
+    --gradient-start: 142 71% 45%; /* Green */
+    --gradient-end: 40 89% 60%; /* Gold */
 
+    /* Secondary/Muted */
     --secondary: 40 20% 90%;
     --secondary-foreground: 25 80% 10%;
 
     --muted: 40 20% 90%;
     --muted-foreground: 25 10% 40%;
 
-    --accent: 40 20% 90%;
+    /* Accent (Gold) */
+    --accent: 40 89% 60%;
     --accent-foreground: 25 80% 10%;
 
     --destructive: 0 84.2% 60.2%;
@@ -34,28 +38,26 @@
 
     --border: 40 10% 80%;
     --input: 40 10% 80%;
-    --ring: 217 91.2% 59.8%; /* Matching ring color to primary */
+    --ring: 142 71% 45%; /* Matching ring color to primary */
 
-    --radius: 0.75rem; /* Softened radius */
+    --radius: 0.75rem;
 
-    --sidebar-background: 40 20% 98%; /* Light Cream */
+    /* Sidebar (Purple) */
+    --sidebar-background: 250 60% 30%; /* Deep Purple */
+    --sidebar-foreground: 210 40% 98%; /* Light Text */
 
-    --sidebar-foreground: 25 80% 10%;
+    --sidebar-primary: 40 89% 60%; /* Gold Accent */
+    --sidebar-primary-foreground: 25 80% 10%; /* Dark Text on Gold */
 
-    --sidebar-primary: 217 91.2% 59.8%; /* Blue Accent */
+    --sidebar-accent: 250 60% 40%; /* Slightly lighter purple for hover */
+    --sidebar-accent-foreground: 210 40% 98%;
 
-    --sidebar-primary-foreground: 210 40% 98%; /* Light Text */
-
-    --sidebar-accent: 40 20% 90%;
-
-    --sidebar-accent-foreground: 25 80% 10%;
-
-    --sidebar-border: 40 10% 80%;
-
-    --sidebar-ring: 217 91.2% 59.8%;
+    --sidebar-border: 250 60% 25%;
+    --sidebar-ring: 40 89% 60%;
   }
 
   .dark {
+    /* Base Colors */
     --background: 240 5.9% 10%; /* Dark Grey Background */
     --foreground: 210 40% 98%; /* Light Text */
 
@@ -65,37 +67,41 @@
     --popover: 240 5.9% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91.2% 59.8%; /* Blue Accent Button */
-    --primary-foreground: 210 40% 98%; /* Light Text on Blue */
+    /* Primary (Green) */
+    --primary: 142 71% 45%;
+    --primary-foreground: 210 40% 98%;
     
-    /* Custom Gradient Colors for the new button */
-    --gradient-start: 217 91.2% 59.8%;
-    --gradient-end: 224 80% 45%;
+    /* Custom Gradient Colors (Using Green/Gold) */
+    --gradient-start: 142 71% 45%;
+    --gradient-end: 40 89% 60%;
 
+    /* Secondary/Muted */
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 210 40% 98%;
+    /* Accent (Gold) */
+    --accent: 40 89% 60%;
+    --accent-foreground: 25 80% 10%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 217 91.2% 59.8%;
+    --ring: 142 71% 45%;
     
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 217 91.2% 59.8%; /* Blue Accent */
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar (Purple) */
+    --sidebar-background: 250 60% 30%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 40 89% 60%;
+    --sidebar-primary-foreground: 25 80% 10%;
+    --sidebar-accent: 250 60% 40%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 250 60% 25%;
+    --sidebar-ring: 40 89% 60%;
   }
 }
 

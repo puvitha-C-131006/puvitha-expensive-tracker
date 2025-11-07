@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell, // Added Cell here
+  Cell,
 } from "recharts";
 import { Expense } from "@/lib/types";
 
@@ -15,13 +15,14 @@ interface CategoryBarChartProps {
   expenses: Expense[];
 }
 
+// New vibrant color palette
 const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#8884d8",
-  "#82ca9d",
+  "#4F46E5", // Indigo
+  "#10B981", // Emerald
+  "#F59E0B", // Amber
+  "#EF4444", // Red
+  "#06B6D4", // Cyan
+  "#EC4899", // Pink
 ];
 
 const processData = (expenses: Expense[]) => {
@@ -63,6 +64,17 @@ export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({
             bottom: 5,
           }}
         >
+          {/* SVG Definitions for Glow Effect */}
+          <defs>
+            <filter id="barGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
           <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
           <XAxis dataKey="category" stroke="hsl(var(--foreground))" />
           <YAxis
@@ -80,7 +92,11 @@ export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({
           />
           <Bar dataKey="total" radius={[4, 4, 0, 0]}>
             {data.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell 
+                key={`cell-${index}`} 
+                fill={COLORS[index % COLORS.length]} 
+                style={{ filter: 'url(#barGlow)' }} // Apply glow filter
+              />
             ))}
           </Bar>
         </BarChart>

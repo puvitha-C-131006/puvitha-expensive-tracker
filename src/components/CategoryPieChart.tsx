@@ -13,13 +13,14 @@ interface CategoryPieChartProps {
   expenses: Expense[];
 }
 
+// New vibrant color palette
 const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#8884d8",
-  "#82ca9d",
+  "#4F46E5", // Indigo
+  "#10B981", // Emerald
+  "#F59E0B", // Amber
+  "#EF4444", // Red
+  "#06B6D4", // Cyan
+  "#EC4899", // Pink
 ];
 
 const processData = (expenses: Expense[]) => {
@@ -69,6 +70,16 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({
     <div className="h-[400px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
+          {/* SVG Definitions for Glow Effect */}
+          <defs>
+            <filter id="pieGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
           <Pie
             data={data}
             dataKey="value"
@@ -86,6 +97,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
+                style={{ filter: 'url(#pieGlow)' }} // Apply glow filter
               />
             ))}
           </Pie>

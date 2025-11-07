@@ -1,24 +1,15 @@
 import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, TrendingUp, Wallet, CreditCard } from "lucide-react";
 import { ExpenseTable } from "@/components/ExpenseTable";
-import { mockExpenses } from "@/lib/types";
+import { mockExpenses, mockIncomes } from "@/lib/types";
 import { CategoryBarChart } from "@/components/CategoryBarChart";
+import { DollarSign, TrendingUp, Wallet, CreditCard, ArrowDown, ArrowUp, Scale } from "lucide-react";
+import { isSameMonth, isSameYear, parseISO } from "date-fns";
 
 const Dashboard = () => {
-  // Use a subset of mock expenses for recent transactions
-  const recentExpenses = mockExpenses.slice(0, 3);
+  const today = new Date();
 
-  // Mock calculations for display
-  const totalMonthlyExpenses = mockExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-  const budgetRemaining = 5000 - totalMonthlyExpenses; // Assuming a $5000 budget
-  const largestCategory = mockExpenses.reduce((acc, exp) => {
-    acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
-    return acc;
-  }, {} as Record<string, number>);
-  
-  const topCategory = Object.entries(largestCategory).sort(([, a], [, b]) => b - a)[0];
-
+  // Helper function to format currency
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -26,80 +17,148 @@ const Dashboard = () => {
     }).format(amount);
   };
 
+  // --- Calculations ---
+
+  // Monthly Expenses (Current Month)
+  const currentMonthExpenses = mockExpenses.filter(exp => 
+    isSameMonth(parseISO(exp.date), today) && isSameYear(parseISO(exp.date), today)
+  );
+  const totalMonthlyExpenses = currentMonthExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+
+  // Yearly Expenses (Current Year)
+  const currentYearExpenses = mockExpenses.filter(exp => 
+    isSameYear(parseISO(exp.date), today)
+  );
+  const totalYearlyExpenses = currentYearExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+
+  // Total Income (Current Month)
+  const currentMonthIncomes = mockIncomes.filter(inc => 
+    isSameMonth(parseISO(inc.date), today) && isSameYear(parseISO(inc.date), today)
+  );
+  const totalMonthlyIncome = currentMonthIncomes.reduce((sum, inc) => sum + inc.amount, 0);
+
+  // Net Balance (Current Month)
+  const netMonthlyBalance = totalMonthlyIncome - totalMonthlyExpenses;
+
+  // Largest Category (Current Month)
+  const largestCategory = currentMonthExpenses.reduce((acc, exp) => {
+    acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
+    return acc;
+  }, {} as Record<string, number>);
+  
+  const topCategory = Object.entries(largestCategory).sort(([, a], [, b]) => b - a)[0];
+
+  // Use a subset of mock expenses for recent transactions
+  const recentExpenses = mockExpenses.slice(0, 5);
+
+
   return (
     <Layout>
       <h1 className="text-3xl font-bold tracking-tight">Expense Dashboard</h1>
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Financial Overview Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        
+        {/* Total Income (Monthly) */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Monthly Expenses
+              Total Income (Mo)
             </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <ArrowUp className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalMonthlyExpenses)}</div>
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+              {formatCurrency(totalMonthlyIncome)}
+            </div>
             <p className="text-xs text-muted-foreground">
-              +20.1% from last month (Mock Data)
+              Based on current month data
             </p>
           </CardContent>
         </Card>
+
+        {/* Total Expenses (Monthly) */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Budget Remaining
+              Total Expenses (Mo)
+            </CardTitle>
+            <ArrowDown className="h-4 w-4 text-red-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-destructive">
+              {formatCurrency(totalMonthlyExpenses)}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Based on current month data
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Net Balance (Monthly) */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Net Balance (Mo)
+            </CardTitle>
+            <Scale className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className={`text-2xl font-bold ${netMonthlyBalance >= 0 ? 'text-green-600 dark:text-green-400' : 'text-destructive'}`}>
+              {formatCurrency(netMonthlyBalance)}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Income minus Expenses
+            </p>
+          </CardContent>
+        </Card>
+        
+        {/* Total Yearly Spending */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Yearly Spending
             </CardTitle>
             <Wallet className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(budgetRemaining)}</div>
+            <div className="text-2xl font-bold">{formatCurrency(totalYearlyExpenses)}</div>
             <p className="text-xs text-muted-foreground">
-              {((totalMonthlyExpenses / 5000) * 100).toFixed(0)}% of budget utilized (Mock Data)
+              Total expenses this year
             </p>
           </CardContent>
         </Card>
+
+        {/* Largest Category (Monthly) */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Largest Category
+              Top Category (Mo)
             </CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{topCategory ? topCategory[0] : 'N/A'}</div>
             <p className="text-xs text-muted-foreground">
-              {topCategory ? formatCurrency(topCategory[1]) : 'N/A'} spent this month (Mock Data)
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Savings Rate
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+15%</div>
-            <p className="text-xs text-muted-foreground">
-              Compared to previous quarter (Mock Data)
+              {topCategory ? formatCurrency(topCategory[1]) : 'N/A'} spent this month
             </p>
           </CardContent>
         </Card>
       </div>
       
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card className="col-span-2">
+      {/* Chart Section */}
+      <div className="grid gap-4 md:grid-cols-1">
+        <Card className="col-span-1">
           <CardHeader>
-            <CardTitle>Spending by Category</CardTitle>
+            <CardTitle>Spending by Category (Current Month)</CardTitle>
           </CardHeader>
           <CardContent>
-            <CategoryBarChart expenses={mockExpenses} />
+            <CategoryBarChart expenses={currentMonthExpenses} />
           </CardContent>
         </Card>
       </div>
 
+      {/* Recent Transactions Section */}
       <div className="mt-6">
         <Card>
           <CardHeader>

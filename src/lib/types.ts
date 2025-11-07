@@ -6,6 +6,13 @@ export type Expense = {
   amount: number;
 };
 
+export type Income = {
+  id: string;
+  date: string;
+  source: string;
+  amount: number;
+};
+
 export const mockExpenses: Expense[] = [
   {
     id: "exp_001",
@@ -41,5 +48,40 @@ export const mockExpenses: Expense[] = [
     category: "Housing",
     description: "Monthly rent payment",
     amount: 1500.00,
+  },
+  {
+    id: "exp_006",
+    date: "2024-09-15",
+    category: "Groceries",
+    description: "Previous month shopping",
+    amount: 110.00,
+  },
+  {
+    id: "exp_007",
+    date: "2023-12-01",
+    category: "Housing",
+    description: "Yearly expense example",
+    amount: 1200.00,
+  },
+];
+
+export const mockIncomes: Income[] = [
+  {
+    id: "inc_001",
+    date: "2024-10-01",
+    source: "Salary",
+    amount: 5000.00,
+  },
+  {
+    id: "inc_002",
+    date: "2024-09-01",
+    source: "Salary",
+    amount: 5000.00,
+  },
+  {
+    id: "inc_003",
+    date: "2023-12-01",
+    source: "Bonus",
+    amount: 1000.00,
   },
 ];

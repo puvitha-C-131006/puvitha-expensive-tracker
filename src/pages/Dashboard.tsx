@@ -12,12 +12,22 @@ import { DataTypeSelector } from "@/components/DataTypeSelector";
 
 const Dashboard = () => {
   const today = new Date();
+  // State to force re-render when data might have changed externally (e.g., on Expenses page)
+  const [dataVersion, setDataVersion] = React.useState(0);
+  
   const [timePeriod, setTimePeriod] = React.useState<"monthly" | "yearly">(
     "monthly",
   );
   const [dataType, setDataType] = React.useState<"expenses" | "income">(
     "expenses",
   );
+
+  // Force re-read data when component mounts/focuses
+  React.useEffect(() => {
+    // This is a simple way to ensure the component reads the latest global state
+    setDataVersion(v => v + 1);
+  }, []);
+
 
   // Fetch current data from the store
   const mockExpenses = getExpenses();

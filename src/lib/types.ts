@@ -24,12 +24,6 @@ export type BudgetSettings = {
   budgetCategory: string; // e.g., "Total" or a specific category
 };
 
-export type NotificationSettings = {
-  highSpendingAlerts: boolean;
-  alertThresholdPercentage: number; // e.g., 80 for 80% of budget
-  notificationType: "email" | "popup";
-};
-
 // Function to apply a small random variance (up to +/- 10%)
 const randomizeAmount = (baseAmount: number): number => {
   const variance = baseAmount * 0.1 * (Math.random() * 2 - 1); // Random number between -0.1 and +0.1 of baseAmount
@@ -131,12 +125,6 @@ let budgetSettingsStore: BudgetSettings = {
   budgetCategory: "Total",
 };
 
-let notificationSettingsStore: NotificationSettings = {
-  highSpendingAlerts: true,
-  alertThresholdPercentage: 80,
-  notificationType: "popup",
-};
-
 // Observer pattern for User Profile
 type ProfileListener = (profile: UserProfile) => void;
 const profileListeners: ProfileListener[] = [];
@@ -190,12 +178,6 @@ export const getBudgetSettings = () => budgetSettingsStore;
 export const updateBudgetSettings = (settings: BudgetSettings) => {
   budgetSettingsStore = settings;
   return budgetSettingsStore;
-};
-
-export const getNotificationSettings = () => notificationSettingsStore;
-export const updateNotificationSettings = (settings: NotificationSettings) => {
-  notificationSettingsStore = settings;
-  return notificationSettingsStore;
 };
 
 // Helper for expense categories

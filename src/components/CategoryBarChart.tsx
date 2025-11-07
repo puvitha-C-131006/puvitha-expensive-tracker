@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Cell, // Added Cell here
 } from "recharts";
 import { Expense } from "@/lib/types";
 

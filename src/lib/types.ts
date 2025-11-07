@@ -115,6 +115,25 @@ let userProfileStore: UserProfile = {
   dateOfBirth: "1990-01-01",
 };
 
+// Observer pattern for User Profile
+type ProfileListener = (profile: UserProfile) => void;
+const profileListeners: ProfileListener[] = [];
+
+export const subscribeToProfileChanges = (listener: ProfileListener) => {
+  profileListeners.push(listener);
+  return () => {
+    const index = profileListeners.indexOf(listener);
+    if (index > -1) {
+      profileListeners.splice(index, 1);
+    }
+  };
+};
+
+const notifyProfileChange = () => {
+  profileListeners.forEach(listener => listener(userProfileStore));
+};
+
+
 // Functions to access and mutate the store
 export const getExpenses = () => expensesStore;
 export const addExpense = (expense: Omit<Expense, 'id'>) => {
@@ -141,6 +160,6 @@ export const addIncome = (income: Omit<Income, 'id'>) => {
 export const getUserProfile = () => userProfileStore;
 export const updateUserProfile = (profile: UserProfile) => {
   userProfileStore = profile;
-  // In a real app, you might trigger a global state update here
+  notifyProfileChange(); // Notify listeners upon update
   return userProfileStore;
 };

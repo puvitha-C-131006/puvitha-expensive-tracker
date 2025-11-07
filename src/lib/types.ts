@@ -13,6 +13,12 @@ export type Income = {
   amount: number;
 };
 
+export type UserProfile = {
+  name: string;
+  email: string;
+  dateOfBirth: string; // ISO date string
+};
+
 // Function to apply a small random variance (up to +/- 10%)
 const randomizeAmount = (baseAmount: number): number => {
   const variance = baseAmount * 0.1 * (Math.random() * 2 - 1); // Random number between -0.1 and +0.1 of baseAmount
@@ -103,6 +109,12 @@ let incomesStore: Income[] = baseMockIncomes.map(income => ({
   amount: randomizeAmount(income.amount),
 }));
 
+let userProfileStore: UserProfile = {
+  name: "Jane Doe",
+  email: "jane.doe@example.com",
+  dateOfBirth: "1990-01-01",
+};
+
 // Functions to access and mutate the store
 export const getExpenses = () => expensesStore;
 export const addExpense = (expense: Omit<Expense, 'id'>) => {
@@ -124,4 +136,11 @@ export const addIncome = (income: Omit<Income, 'id'>) => {
   };
   incomesStore = [newIncome, ...incomesStore];
   return newIncome;
+};
+
+export const getUserProfile = () => userProfileStore;
+export const updateUserProfile = (profile: UserProfile) => {
+  userProfileStore = profile;
+  // In a real app, you might trigger a global state update here
+  return userProfileStore;
 };

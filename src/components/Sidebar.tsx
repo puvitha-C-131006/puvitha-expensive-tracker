@@ -1,9 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, DollarSign, Settings, User } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { LayoutDashboard, DollarSign, Settings, User, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useUserProfile } from "@/hooks/use-user-profile";
+import { useAuth } from "@/context/AuthContext";
+import { showSuccess } from "@/utils/toast";
 
 const navItems = [
   {
@@ -25,7 +27,15 @@ const navItems = [
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
-  const userProfile = useUserProfile(); // Use the new hook
+  const navigate = useNavigate();
+  const userProfile = useUserProfile();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    showSuccess("Logged out successfully.");
+    navigate("/login");
+  };
 
   return (
     <div className="flex flex-col space-y-4 p-4 h-full bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
@@ -55,12 +65,20 @@ export const Sidebar: React.FC = () => {
         })}
       </nav>
       
-      {/* User Profile Display at the bottom */}
-      <div className="p-2 border-t border-sidebar-border mt-auto">
+      {/* User Profile Display and Logout at the bottom */}
+      <div className="p-2 border-t border-sidebar-border mt-auto space-y-2">
         <div className="flex items-center text-sm text-sidebar-foreground/80">
           <User className="h-4 w-4 mr-2" />
           <span>{userProfile.name}</span>
         </div>
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start text-sm text-red-300 hover:bg-red-900/50 hover:text-red-100"
+          onClick={handleLogout}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
       </div>
     </div>
   );

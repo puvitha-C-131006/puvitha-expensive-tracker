@@ -4,6 +4,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { Footer } from "./Footer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className="flex-1 p-4 md:p-6 space-y-6">
           {children}
         </main>
+        <Footer />
       </div>
     );
   }
@@ -48,6 +50,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className="flex-1 p-8 space-y-6">
           {children}
         </main>
+        <Footer />
       </div>
     </div>
   );

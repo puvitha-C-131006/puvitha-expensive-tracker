@@ -7,15 +7,17 @@ import { IncomeBarChart } from "@/components/IncomeBarChart";
 import { Wallet, CreditCard, ArrowDown, ArrowUp, Scale } from "lucide-react";
 import { isSameMonth, isSameYear, parseISO } from "date-fns";
 import React from "react";
+import { TimePeriodSelector } from "@/components/TimePeriodSelector";
+import { DataTypeSelector } from "@/components/DataTypeSelector";
 
 const Dashboard = () => {
   const today = new Date();
   // State to force re-render when data might have changed externally (e.g., on Expenses page)
   const [dataVersion, setDataVersion] = React.useState(0);
   
-  // Hardcode defaults after removing selectors
-  const timePeriod: "monthly" | "yearly" = "monthly";
-  const dataType: "expenses" | "income" = "expenses";
+  // State for selectors
+  const [timePeriod, setTimePeriod] = React.useState<"monthly" | "yearly">("monthly");
+  const [dataType, setDataType] = React.useState<"expenses" | "income">("expenses");
 
   // Force re-read data when component mounts/focuses
   React.useEffect(() => {
@@ -196,9 +198,18 @@ const Dashboard = () => {
         <Card className="col-span-1">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>
-              {dataType === "expenses" ? "Spending by Category (Monthly)" : "Income by Source (Monthly)"}
+              {dataType === "expenses" ? "Spending by Category" : "Income by Source"}
             </CardTitle>
-            {/* Removed TimePeriodSelector and DataTypeSelector */}
+            <div className="flex space-x-2">
+              <DataTypeSelector
+                selectedType={dataType}
+                onTypeChange={setDataType}
+              />
+              <TimePeriodSelector
+                selectedPeriod={timePeriod}
+                onPeriodChange={setTimePeriod}
+              />
+            </div>
           </CardHeader>
           <CardContent>
             {dataType === "expenses" ? (

@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout.tsx";
 import { UserProfileForm } from "@/components/UserProfileForm";
 import { BudgetSettingsForm } from "@/components/BudgetSettingsForm";
 import { NotificationSettingsForm } from "@/components/NotificationSettingsForm";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Settings = () => {
   return (
@@ -11,6 +12,7 @@ const Settings = () => {
         <UserProfileForm />
         <BudgetSettingsForm />
         <NotificationSettingsForm />
+        <ThemeToggle />
       </div>
     </Layout>
   );

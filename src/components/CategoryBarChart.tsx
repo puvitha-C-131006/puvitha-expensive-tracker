@@ -14,6 +14,15 @@ interface CategoryBarChartProps {
   expenses: Expense[];
 }
 
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#8884d8",
+  "#82ca9d",
+];
+
 const processData = (expenses: Expense[]) => {
   const categoryTotals: Record<string, number> = {};
   expenses.forEach((expense) => {
@@ -68,7 +77,11 @@ export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({
               borderRadius: "var(--radius)",
             }}
           />
-          <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="total" radius={[4, 4, 0, 0]}>
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

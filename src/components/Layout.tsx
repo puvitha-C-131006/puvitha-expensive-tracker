@@ -14,6 +14,13 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
 
+  // Wrapper for content to apply fade-in animation
+  const ContentWrapper = ({ children }: { children: React.ReactNode }) => (
+    <div className="page-fade-in">
+      {children}
+    </div>
+  );
+
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen">
@@ -34,7 +41,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <ThemeToggle />
         </header>
         <main className="flex-1 p-4 md:p-6 space-y-6">
-          {children}
+          <ContentWrapper>{children}</ContentWrapper>
         </main>
         <Footer />
       </div>
@@ -55,7 +62,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <ThemeToggle />
         </header>
         <main className="flex-1 p-8 space-y-6">
-          {children}
+          <ContentWrapper>{children}</ContentWrapper>
         </main>
         <Footer />
       </div>

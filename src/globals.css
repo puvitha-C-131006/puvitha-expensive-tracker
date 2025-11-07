@@ -108,3 +108,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom animation for page transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}

@@ -52,6 +52,14 @@ export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({
 }) => {
   const data = processData(expenses);
 
+  if (data.length === 0) {
+    return (
+      <div className="h-[300px] w-full flex items-center justify-center text-muted-foreground">
+        No expense data available for this period.
+      </div>
+    );
+  }
+
   return (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">

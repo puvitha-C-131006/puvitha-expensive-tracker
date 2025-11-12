@@ -5,7 +5,8 @@ import { CategoryPieChart } from "@/components/CategoryPieChart";
 import { AddExpenseDialog } from "@/components/AddExpenseDialog";
 import { ExpenseTable } from "@/components/ExpenseTable";
 import { ExpenseFilterBar } from "@/components/ExpenseFilterBar";
-import { MonthlyExpenseBarChart } from "@/components/MonthlyExpenseBarChart"; // Import new chart
+import { MonthlyExpenseBarChart } from "@/components/MonthlyExpenseBarChart";
+import { ExportDataButton } from "@/components/ExportDataButton"; // Import new button
 import React from "react";
 
 const Expenses = () => {
@@ -44,6 +45,7 @@ const Expenses = () => {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Expense Transactions</h1>
         <div className="flex space-x-2">
+          <ExportDataButton data={filteredExpenses} filename="expense_report" />
           <AddExpenseDialog onExpenseAdded={handleExpenseAdded} />
         </div>
       </div>
@@ -67,7 +69,7 @@ const Expenses = () => {
           </CardContent>
         </Card>
         
-        {/* New Monthly Trend Chart */}
+        {/* Monthly Trend Chart */}
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Monthly Spending Trend (Last 12 Months)</CardTitle>

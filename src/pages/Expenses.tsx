@@ -5,6 +5,7 @@ import { CategoryPieChart } from "@/components/CategoryPieChart";
 import { AddExpenseDialog } from "@/components/AddExpenseDialog";
 import { ExpenseTable } from "@/components/ExpenseTable";
 import { ExpenseFilterBar } from "@/components/ExpenseFilterBar";
+import { MonthlyExpenseBarChart } from "@/components/MonthlyExpenseBarChart"; // Import new chart
 import React from "react";
 
 const Expenses = () => {
@@ -65,7 +66,22 @@ const Expenses = () => {
             <CategoryPieChart expenses={filteredExpenses} />
           </CardContent>
         </Card>
+        
+        {/* New Monthly Trend Chart */}
         <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Monthly Spending Trend (Last 12 Months)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* Chart uses ALL expenses, not filtered ones, to show overall trend */}
+            <MonthlyExpenseBarChart expenses={allExpenses} />
+          </CardContent>
+        </Card>
+      </div>
+      
+      {/* Expense Table Section */}
+      <div className="mt-6">
+        <Card>
           <CardHeader>
             <CardTitle>All Expense Transactions</CardTitle>
           </CardHeader>

@@ -100,6 +100,13 @@ const baseMockIncomes = [
     source: "Bonus",
     amount: 1000.00,
   },
+  // New income entry added here
+  {
+    id: "inc_004",
+    date: new Date().toISOString().split('T')[0],
+    source: "Monthly Salary",
+    amount: 50000.00,
+  },
 ];
 
 // Mutable in-memory stores

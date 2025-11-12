@@ -144,6 +144,7 @@ const notifyProfileChange = () => {
 
 // Functions to access and mutate the store
 export const getExpenses = () => expensesStore;
+
 export const addExpense = (expense: Omit<Expense, 'id'>) => {
   const newExpense: Expense = {
     ...expense,
@@ -152,6 +153,20 @@ export const addExpense = (expense: Omit<Expense, 'id'>) => {
   };
   expensesStore = [newExpense, ...expensesStore];
   return newExpense;
+};
+
+export const deleteExpense = (id: string) => {
+  expensesStore = expensesStore.filter(exp => exp.id !== id);
+};
+
+export const updateExpense = (updatedExpense: Expense) => {
+  expensesStore = expensesStore.map(exp => 
+    exp.id === updatedExpense.id ? {
+      ...updatedExpense,
+      date: new Date(updatedExpense.date).toISOString().split('T')[0],
+    } : exp
+  );
+  return updatedExpense;
 };
 
 export const getIncomes = () => incomesStore;

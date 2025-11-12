@@ -1,9 +1,9 @@
 import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExpenseTable } from "@/components/ExpenseTable";
 import { getExpenses, addExpense } from "@/lib/types";
 import { CategoryPieChart } from "@/components/CategoryPieChart";
 import { AddExpenseDialog } from "@/components/AddExpenseDialog";
+import { ExpenseTable } from "@/components/ExpenseTable";
 import React from "react";
 
 const Expenses = () => {
@@ -12,13 +12,14 @@ const Expenses = () => {
 
   const expenses = getExpenses();
 
-  const handleExpenseAdded = (newExpenseData: any) => {
-    addExpense(newExpenseData);
+  const handleDataChange = () => {
     setDataVersion(v => v + 1); // Force re-render
   };
 
-  // For the table display, we will show expenses for now, but we could add a toggle later.
-  // For the pie chart, we still use expenses as it's a spending distribution chart.
+  const handleExpenseAdded = (newExpenseData: any) => {
+    addExpense(newExpenseData);
+    handleDataChange();
+  };
 
   return (
     <Layout>
@@ -40,10 +41,10 @@ const Expenses = () => {
         </Card>
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Recent Expenses</CardTitle>
+            <CardTitle>All Expense Transactions</CardTitle>
           </CardHeader>
           <CardContent>
-            <ExpenseTable expenses={expenses} />
+            <ExpenseTable expenses={expenses} onDataChange={handleDataChange} />
           </CardContent>
         </Card>
       </div>

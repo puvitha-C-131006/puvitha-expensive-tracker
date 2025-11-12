@@ -61,12 +61,15 @@ type ExpenseFormValues = z.infer<typeof formSchema>;
 interface AddExpenseFormProps {
   onExpenseAdded: (expense: ExpenseFormValues) => void;
   onClose: () => void;
+  initialData?: ExpenseFormValues; // Added optional initial data for editing
 }
 
-export function AddExpenseForm({ onExpenseAdded, onClose }: AddExpenseFormProps) {
+export function AddExpenseForm({ onExpenseAdded, onClose, initialData }: AddExpenseFormProps) {
+  const isEditing = !!initialData;
+
   const form = useForm<ExpenseFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: initialData || {
       date: new Date(),
       category: expenseCategories[0],
       description: "",
@@ -75,11 +78,10 @@ export function AddExpenseForm({ onExpenseAdded, onClose }: AddExpenseFormProps)
   });
 
   function onSubmit(values: ExpenseFormValues) {
-    // In a real application, you would send this data to an API
-    console.log("New Expense Submitted:", values);
+    console.log("Expense Submitted:", values);
     
     onExpenseAdded(values);
-    showSuccess("Expense added successfully!");
+    showSuccess(isEditing ? "Expense updated successfully!" : "Expense added successfully!");
     onClose();
   }
 
@@ -184,7 +186,7 @@ export function AddExpenseForm({ onExpenseAdded, onClose }: AddExpenseFormProps)
             Cancel
           </Button>
           <Button type="submit">
-            Save Expense
+            {isEditing ? "Save Changes" : "Save Expense"}
           </Button>
         </div>
       </form>

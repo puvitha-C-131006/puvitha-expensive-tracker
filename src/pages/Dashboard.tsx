@@ -9,6 +9,7 @@ import { isSameMonth, isSameYear, parseISO } from "date-fns";
 import React from "react";
 import { TimePeriodSelector } from "@/components/TimePeriodSelector";
 import { DataTypeSelector } from "@/components/DataTypeSelector";
+import { BudgetRemainingCard } from "@/components/BudgetRemainingCard";
 
 const Dashboard = () => {
   const today = new Date();
@@ -192,6 +193,12 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+      
+      {/* Budget Card Section */}
+      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+        <BudgetRemainingCard />
+      </div>
+
 
       {/* Chart Section */}
       <div className="grid gap-4 md:grid-cols-1">
@@ -228,7 +235,8 @@ const Dashboard = () => {
             <CardTitle>Recent Transactions</CardTitle>
           </CardHeader>
           <CardContent>
-            <ExpenseTable expenses={recentExpenses} />
+            {/* Note: ExpenseTable here needs an onDataChange prop if we want to allow editing/deleting from the dashboard view */}
+            <ExpenseTable expenses={recentExpenses} onDataChange={() => setDataVersion(v => v + 1)} />
           </CardContent>
         </Card>
       </div>

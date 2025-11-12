@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, DollarSign, Settings, User, LogOut } from "lucide-react";
+import { LayoutDashboard, DollarSign, Settings, User, LogOut, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useUserProfile } from "@/hooks/use-user-profile";
@@ -17,6 +17,11 @@ const navItems = [
     name: "Expenses",
     href: "/expenses",
     icon: DollarSign,
+  },
+  {
+    name: "Income",
+    href: "/income",
+    icon: TrendingUp,
   },
   {
     name: "Settings",

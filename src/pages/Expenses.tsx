@@ -1,10 +1,9 @@
 import { Layout } from "@/components/Layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseTable } from "@/components/ExpenseTable";
-import { getExpenses, getIncomes, addExpense, addIncome } from "@/lib/types";
+import { getExpenses, addExpense } from "@/lib/types";
 import { CategoryPieChart } from "@/components/CategoryPieChart";
 import { AddExpenseDialog } from "@/components/AddExpenseDialog";
-import { AddIncomeDialog } from "@/components/AddIncomeDialog";
 import React from "react";
 
 const Expenses = () => {
@@ -12,15 +11,9 @@ const Expenses = () => {
   const [dataVersion, setDataVersion] = React.useState(0);
 
   const expenses = getExpenses();
-  const incomes = getIncomes();
 
   const handleExpenseAdded = (newExpenseData: any) => {
     addExpense(newExpenseData);
-    setDataVersion(v => v + 1); // Force re-render
-  };
-
-  const handleIncomeAdded = (newIncomeData: any) => {
-    addIncome(newIncomeData);
     setDataVersion(v => v + 1); // Force re-render
   };
 
@@ -29,10 +22,9 @@ const Expenses = () => {
 
   return (
     <Layout>
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Transactions</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold tracking-tight">Expense Transactions</h1>
         <div className="flex space-x-2">
-          <AddIncomeDialog onIncomeAdded={handleIncomeAdded} />
           <AddExpenseDialog onExpenseAdded={handleExpenseAdded} />
         </div>
       </div>

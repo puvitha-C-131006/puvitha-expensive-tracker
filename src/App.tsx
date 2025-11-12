@@ -8,6 +8,7 @@ import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Expenses from "./pages/Expenses.tsx";
+import IncomePage from "./pages/Income.tsx"; // Import the new Income page
 import Settings from "./pages/Settings.tsx";
 import Login from "./pages/Login.tsx";
 import { AuthProvider, useAuth } from "./context/AuthContext.tsx";
@@ -46,6 +47,14 @@ const AppRoutes = () => (
       element={
         <ProtectedRoute>
           <Expenses />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/income"
+      element={
+        <ProtectedRoute>
+          <IncomePage />
         </ProtectedRoute>
       }
     />
